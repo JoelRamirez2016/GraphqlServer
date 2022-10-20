@@ -1,10 +1,11 @@
-import { User } from '../user/model';
+import { Client } from '../client/model';
   
 export interface Terminal {
     id: string,
-    user: User,
+    client: Client,
     name: string
     createAt: Date
 }
 
-export type TerminalParams = Pick<Terminal, "name" |  "user">
+export type TerminalCreateParams = Pick<Terminal, "name" |  "client">
+export type TerminalUpdateParams = Pick<Terminal, "id" | "name" |  "client">

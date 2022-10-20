@@ -3,22 +3,22 @@ import {
     deleteTerminal, 
     getTerminal, 
     getTerminales,
-    getTerminalesByUser, 
+    getTerminalesByClient, 
     updateTerminal 
 } from "./service";
-import { addUser } from "../user/service";
+import { addClient } from "../client/service";
 
 describe("Test Terminales Service", () => {    
 
-    const userPromise = addUser({username: "user test"});
+    const clientPromise = addClient({clientname: "client test"});
     
     test("Test terminal create", () => {        
         const name = "test t";
 
-        return userPromise.then((u) => addTerminal({name, user: u}))
+        return clientPromise.then((u) => addTerminal({name, client: u}))
         .then((t) => {
             expect(t.name).toEqual(name)
-            expect(getTerminalesByUser(t.user.id)).resolves.toContain(t) 
+            expect(getTerminalesByClient(t.client.id)).resolves.toContain(t) 
             return getTerminal(t.id)
         })
         .then((t) => {
@@ -31,12 +31,12 @@ describe("Test Terminales Service", () => {
         const name1 = "test t1";
         const name2 = "test t2";
 
-        return userPromise.then((u) => addTerminal({name: name1, user: u}))
+        return clientPromise.then((u) => addTerminal({name: name1, client: u}))
             .then((t) => updateTerminal({ ...t, name: name2 }))
             .then((t) => {
                 if (t) {
                     expect(t.name).toEqual(name2)
-                    expect(getTerminalesByUser(t.user.id)).resolves.toContain(t);
+                    expect(getTerminalesByClient(t.client.id)).resolves.toContain(t);
                 } else {                
                     fail('terminal not found');
                 }
@@ -44,12 +44,12 @@ describe("Test Terminales Service", () => {
     }, 30000);
     test("Test terminal delete", () => {        
         const name = "test t";
-        return userPromise.then((u) => addTerminal({name, user: u}))
+        return clientPromise.then((u) => addTerminal({name, client: u}))
             .then((t) => deleteTerminal(t.id))
             .then((t) => {                                
                 if (t) {
                     expect(t.name).toEqual(name);
-                    expect(getTerminalesByUser(t.user.id)).resolves.not.toContain(t)   
+                    expect(getTerminalesByClient(t.client.id)).resolves.not.toContain(t)   
                 } else {                
                     fail('terminal not found');
                 }
@@ -59,7 +59,7 @@ describe("Test Terminales Service", () => {
         const name1 = "test t1";
         const name2 = "test t2";
 
-        return userPromise.then((u) => addTerminal({name: name1, user: u}))
+        return clientPromise.then((u) => addTerminal({name: name1, client: u}))
             .then((t) => updateTerminal({ ...t, name: name2, id: ""}))
             .then((t) => expect(t).toBeNull());
     }, 30000);

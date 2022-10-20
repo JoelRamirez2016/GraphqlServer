@@ -1,5 +1,5 @@
 import { gql } from "apollo-server";
-import { getUser } from "../user/service";
+import { getClient } from "../client/service";
 import { addTerminal, deleteTerminal, getTerminal, getTerminales, updateTerminal } from "./service";
 
 export const typeDef = gql`
@@ -7,7 +7,7 @@ export const typeDef = gql`
         id: String!
         name: String!        
         createAt: Date!       
-        user: User!
+        client: Client!
     }
 
     type Query {
@@ -21,7 +21,7 @@ export const typeDef = gql`
     type Mutation {
         addTerminal(
             name: String!,
-            userId: String!
+            clientId: String!
         ): Terminal!
         updateTerminal(
             name: String!       
@@ -40,11 +40,10 @@ export const resolvers = {
     },    
     Mutation: {
         addTerminal: (_:any, args:any) => addTerminal(args),
-        updateTerminal: (_: any, args: any) => getTerminal(args.id).then((t) => 
-            t ? updateTerminal({ ... t, ... args }) : null),
+        updateTerminal: (_: any, args: any) => updateTerminal(args),
         deleteTerminal: (_: any, args: any) => deleteTerminal(args.id)
     },
     Terminal: {
-        user: (_: any) => getUser(_.id)
+        client: (_: any) => getClient(_.id)
     }
 }
