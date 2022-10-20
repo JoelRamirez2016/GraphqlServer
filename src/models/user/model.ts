@@ -3,3 +3,5 @@ export interface User {
     username: string,
     createAt: Date
 }
+
+export type UserParams = Pick<User, "username">

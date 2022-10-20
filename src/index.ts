@@ -1,5 +1,4 @@
 import { ApolloServer } from 'apollo-server'
-// import { schema } from './models';
 import { typeDefs, resolvers } from './models';
 
 const server = new ApolloServer({

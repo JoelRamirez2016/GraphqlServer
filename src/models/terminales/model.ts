@@ -6,3 +6,5 @@ export interface Terminal {
     name: string
     createAt: Date
 }
+
+export type TerminalParams = Pick<Terminal, "name" |  "user">

@@ -1,20 +1,9 @@
 import { delay, lastValueFrom, of } from 'rxjs';
-import { User } from './model';
+import { v4 } from 'uuid';
+import { User, UserParams } from './model';
+import { default as data } from '../../../src/data.json';
 
-let users: User[]  = [
-    {
-        id: "qwerty",
-        username: "joe",        
-        createAt: new Date()
-
-    },
-    {
-        id: "asdfg",
-        username: "manu",  
-        createAt: new Date()
-     
-    }
-];
+const users: User[] = data;
 
 export const getUsers = () : Promise<User[]> =>  
     lastValueFrom(of( users ).pipe(delay(3000)))
@@ -25,9 +14,10 @@ export const getUser = (id: string) : Promise<User | undefined> =>
         .pipe(delay(3000)))
 ;
  
-export const addUser = (user: User) : Promise<User> =>  {    
-    users.push(user);
-    return lastValueFrom(of( user ).pipe(delay(3000)))
+export const addUser = (args: UserParams) : Promise<User> =>  {    
+    const u: User = {... args, id: v4(), createAt: new Date()}
+    users.push(u);
+    return lastValueFrom(of( u ).pipe(delay(3000)))
 };
 
 export const updateUser = (user: User) : Promise<User | null> =>  {        

@@ -1,12 +1,13 @@
 import { gql } from "apollo-server";
-import { addTerminal, getTerminal, getTerminales } from "./service";
+import { getUser } from "../user/service";
+import { addTerminal, deleteTerminal, getTerminal, getTerminales, updateTerminal } from "./service";
 
 export const typeDef = gql`
     type Terminal {
         id: String!
         name: String!        
         createAt: Date!       
-        User: User!
+        user: User!
     }
 
     type Query {
@@ -22,6 +23,12 @@ export const typeDef = gql`
             name: String!,
             userId: String!
         ): Terminal!
+        updateTerminal(
+            name: String!       
+        ): Terminal!
+        deleteTerminal(
+            id: String!       
+        ): Terminal!
     }
 `;
 
@@ -32,6 +39,12 @@ export const resolvers = {
         terminalCount: () => getTerminales().then((terminales) => terminales.length) 
     },    
     Mutation: {
-        addTerminal: (_:any, args:any) => addTerminal(args)
+        addTerminal: (_:any, args:any) => addTerminal(args),
+        updateTerminal: (_: any, args: any) => getTerminal(args.id).then((t) => 
+            t ? updateTerminal({ ... t, ... args }) : null),
+        deleteTerminal: (_: any, args: any) => deleteTerminal(args.id)
+    },
+    Terminal: {
+        user: (_: any) => getUser(_.id)
     }
 }

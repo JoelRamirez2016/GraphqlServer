@@ -39,11 +39,7 @@ export const resolvers = {
         userCount: () => getUsers().then((users) => users.length)
     },
     Mutation: {
-        addUser: (_:any, args:any) => addUser({ 
-            ... args, 
-            id: v4(), 
-            createAt: new Date()
-        }),
+        addUser: (_:any, args:any) => addUser(args),
         updateUser: (_:any, args:any) => getUser(args.id).then((u) => 
             u ? updateUser({ ... u, ... args }) : null
         ),
