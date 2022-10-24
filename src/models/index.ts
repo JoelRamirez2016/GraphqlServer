@@ -1,14 +1,6 @@
-import * as client from './client/schema'; 
-import * as terminal from './terminales/schema';
-import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
-import { gql } from 'apollo-server';
+import * as schema from "./appSchema";
 
-export const typeDefs = mergeTypeDefs([
-    client.typeDef, 
-    terminal.typeDef, 
-    gql`scalar Date`
-])
-export const resolvers = mergeResolvers([
-    client.resolvers, 
-    terminal.resolvers
-])
+export const typeDefs = schema.typeDefs;
+export const resolvers = schema.resolvers;
+export const context = schema.context;
+export const sc = schema.schema;

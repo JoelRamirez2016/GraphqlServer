@@ -1,11 +1,15 @@
 import { ApolloServer } from 'apollo-server'
-import { typeDefs, resolvers } from './models';
+import config from '../config/config';
+import { sc } from './models';
 
 const server = new ApolloServer({
-    typeDefs,
-    resolvers
+    schema: sc,
+    formatError: (err) => {
+        console.log(err)
+        return new Error("INTERNAL SERVER ERROR");
+    }
 });
 
-server.listen().then(({url}) => {
+server.listen(config.PORT).then(({url}) => {
     console.log(`Server listening in port ${url}`);
 })

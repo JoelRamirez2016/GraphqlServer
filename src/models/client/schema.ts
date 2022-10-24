@@ -5,13 +5,13 @@ import { getTerminalesByClient } from "../terminales/service";
 export const typeDef = gql`
     type Client {
         id: String!
-        clientname: String!
+        name: String!
         createAt: Date!
         terminales: [Terminal]!
     }
 
     type Query {
-        clients: [Client]!
+        clients: [Client]! 
         client(
             id: String!
         ): Client
@@ -19,11 +19,11 @@ export const typeDef = gql`
     }
     type Mutation {
         addClient(
-            clientname: String!
+            name: String!
         ): Client!
         updateClient(
             id: String!
-            clientname: String!
+            name: String!
         ): Client
         deleteClient(
             id: String!

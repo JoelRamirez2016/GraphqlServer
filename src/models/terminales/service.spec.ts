@@ -10,7 +10,7 @@ import { addClient } from "../client/service";
 
 describe("Test Terminales Service", () => {    
 
-    const clientPromise = addClient({clientname: "client test"});
+    const clientPromise = addClient({name: "client test"});
     
     test("Test terminal create", () => {        
         const name = "test t";

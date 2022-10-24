@@ -1,8 +1,8 @@
 export interface Client {
     id: string,
-    clientname: string,
+    name: string,
     createAt: Date
 }
 
-export type ClientCreateParams = Pick<Client, "clientname">
-export type ClientUpdateParams = Pick<Client, "id" |"clientname">
+export type ClientCreateParams = Pick<Client, "name">
+export type ClientUpdateParams = Pick<Client, "id" |"name">
