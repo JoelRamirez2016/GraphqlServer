@@ -1,7 +1,7 @@
 import { ApolloServer } from 'apollo-server'
-import { context } from './app';
-import config from '../config/config';
-import schema from './schemas';
+import { context } from './src/app';
+import config from './config/config';
+import schema from './src/schemas';
 
 const server = new ApolloServer({
     schema,

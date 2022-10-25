@@ -9,4 +9,5 @@ export interface User {
 
 export type UserCreateParams = Omit<User, "id" | "createAt">
 export type UserUpdateParams = Omit<User, "createAt">
+export type UserLoginParams = Pick<User, "username" | "password">
 export type UserToken = Pick<User, "username" | "id">

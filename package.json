@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev src/index.ts",
+    "dev": "ts-node-dev index.ts",
     "start": "node build/index.js",
-    "tsc": "tsc",
+    "tsc": "xcopy config\\.env build\\config\\.env* /Y && tsc",
     "test": "jest"
   },
   "keywords": [],

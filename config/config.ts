@@ -4,13 +4,13 @@ import * as dotenv from 'dotenv'
 dotenv.config({ path: path.resolve(__dirname, "../config/.env") })
 
 interface Config {
-    JWT_SECERT: string;
+    JWT_SECRET: string;
     PORT: number;
 }
 
 const getConfig = () => {
     return {
-        JWT_SECERT: process.env.JWT_SECERT,
+        JWT_SECRET: process.env.JWT_SECRET,
         PORT: process.env.PORT ? Number(process.env.PORT) : undefined,
     };
 };

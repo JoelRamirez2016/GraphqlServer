@@ -45,9 +45,12 @@ describe("Test User Service", () => {
     }, 30000);
     test("user login", () => {
         return addUser(userCreateParams)
-            .then(({id, username}) => expect(login({id, username})).resolves.toHaveProperty("value"))        
+            .then(({password, username}) => 
+                expect(login({password, username}))
+                .resolves.toHaveProperty("value"))        
     }, 30000);
     test("user login with fail", () => {
-        return expect(login({id:"", username:"test"})).resolves.toBeNull();
+        return expect(login({password:"", username:"test"}))
+            .resolves.toBeNull();
     }, 30000);
 })
