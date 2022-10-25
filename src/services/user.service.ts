@@ -1,8 +1,8 @@
 import { delay, lastValueFrom, of } from 'rxjs';
 import { v4 } from 'uuid';
-import { User, UserCreateParams, UserUpdateParams, UserToken } from './model';
+import { User, UserCreateParams, UserUpdateParams, UserToken } from '../models/user';
 import jwt from 'jsonwebtoken';
-import config from '../../../config/config';
+import config from '../../config/config';
 
 const users: User[] = [];
 
@@ -46,10 +46,10 @@ export const deleteUser = (id: string) : Promise<User | null> =>  {
 };
 
 export const login = (userToken: UserToken) => {
-    const user = users.find((u) => u.username === userToken.username);
-
+    const user = users.find((u) => u.id === userToken.id);
+    
     if (!user) {
-        return null;        
+        return lastValueFrom(of( null ).pipe(delay(3000)));       
     }
     return lastValueFrom(of({
         value: jwt.sign(user, config.JWT_SECERT)

@@ -1,12 +1,13 @@
 import { ApolloServer } from 'apollo-server'
+import { context } from './app';
 import config from '../config/config';
-import { sc } from './models';
+import schema from './schemas';
 
 const server = new ApolloServer({
-    schema: sc,
-    formatError: (err) => {
-        console.log(err)
-        return new Error("INTERNAL SERVER ERROR");
+    schema,
+    context,
+    formatError: ({message, locations, path}) => {
+        return {message, locations, path}
     }
 });
 

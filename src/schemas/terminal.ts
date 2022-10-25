@@ -1,6 +1,6 @@
 import { gql } from "apollo-server";
-import { getClient } from "../client/service";
-import { addTerminal, deleteTerminal, getTerminal, getTerminales, updateTerminal } from "./service";
+import { getClient } from "../services/client.service"
+import { addTerminal, deleteTerminal, getTerminal, getTerminales, updateTerminal } from "../services/terminales.service";
 
 export const typeDef = gql`
     type Terminal {

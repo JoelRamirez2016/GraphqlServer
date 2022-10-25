@@ -1,9 +1,8 @@
 import { delay, lastValueFrom, of } from 'rxjs';
 import { v4 } from 'uuid';
-import { Client, ClientCreateParams, ClientUpdateParams } from './model';
-import { default as data } from '../../data.json';
+import { Client, ClientCreateParams, ClientUpdateParams } from '../models/client';
 
-const clients: Client[] = data;
+const clients: Client[] = [];
 
 export const getClients = () : Promise<Client[]> =>  
     lastValueFrom(of( clients ).pipe(delay(3000)))

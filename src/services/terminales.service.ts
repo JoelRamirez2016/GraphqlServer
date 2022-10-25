@@ -1,6 +1,6 @@
 import { delay, lastValueFrom, of } from 'rxjs';
 import { v4 } from 'uuid';
-import { Terminal, TerminalCreateParams, TerminalUpdateParams } from './model';
+import { Terminal, TerminalCreateParams, TerminalUpdateParams } from '../models/terminal';
 
 const terminales: Terminal[] = [];
 

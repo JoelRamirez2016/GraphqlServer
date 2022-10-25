@@ -1,4 +1,4 @@
-import { addClient, deleteClient, getClient, getClients, updateClient } from "./service";
+import { addClient, deleteClient, getClient, getClients, updateClient } from "./client.service";
 
 describe("Test Client Service", () => {     
     test("Test client create", () => {        

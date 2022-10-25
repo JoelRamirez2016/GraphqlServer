@@ -1,10 +1,13 @@
 import { gql } from "apollo-server";
-import { addUser, deleteUser, getUser, getUsers, login, updateUser } from "./service";
+import { addUser, deleteUser, getUser, getUsers, login, updateUser } from "../services/user.service";
 
 export const typeDef = gql`
     type User {
         id: String!
         name: String!
+        email: String!
+        username: String!
+        password: String!
         createAt: Date!
     }
 
@@ -13,7 +16,7 @@ export const typeDef = gql`
     }
 
     type Query {
-        users: [User]! @auth(role: "ADMIN")
+        users: [User]! @isLoggedIn
         user(
             id: String!
         ): User
@@ -36,7 +39,7 @@ export const typeDef = gql`
         ): User!
         deleteUser(
             id: String!
-        ): User! @auth(role: "ADMIN")
+        ): User! #@auth(role: "ADMIN")
         login(
             username: String!
             password: String!

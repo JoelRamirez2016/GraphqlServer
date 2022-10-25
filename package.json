@@ -36,10 +36,11 @@
     "testEnvironment": "node",
     "collectCoverage": true,
     "coveragePathIgnorePatterns": [
-      "/node_modeles/",
+      "/node_modules/",
       "/test/",
       "/dist/",
-      "/build/"
+      "/build/",
+      "/config/"
     ]
   }
 }
