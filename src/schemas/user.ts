@@ -1,3 +1,4 @@
+import { PubSub } from '@apollo/server'
 import { addUser, deleteUser, getUser, getUsers, login, updateUser } from "../services/user.service";
 
 export const typeDef = `#graphql
@@ -58,5 +59,10 @@ export const resolvers = {
         updateUser: (_:any, args:any) => updateUser(args),
         deleteUser: (_:any, args:any) => deleteUser(args.id),
         login: (_:any, args:any) => login(args)
-    }    
+    },    
+    Subscription:{
+        userConsulted:{
+            subscribe: () => pubSub.asyncIterator
+        }
+    },  
 };
