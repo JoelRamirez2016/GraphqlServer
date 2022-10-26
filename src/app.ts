@@ -4,10 +4,10 @@ import { getUser } from './services/user.service';
 import { User } from './models/user';
 
 interface Context {
-    currentUser: Promise<User | undefined> | User | undefined
+    currentUser?: Promise<User | undefined> | User 
 }
 
-export const context = ({ req }: any) : Context => {
+export const context = async ({ req }: any) => {
     const auth = req ? req.headers.authorization : null;
 
     try {

@@ -2,10 +2,12 @@ import * as client from './client';
 import * as terminal from './terminal';
 import * as user from './user';
 import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
-import { gql } from 'apollo-server';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { isLoggedInDirective } from '../directives/directives';
 
+const dateTypeDef = `#graphql 
+    scalar Date
+`;
 const directives = [
     isLoggedInDirective('isLoggedIn'),
 ]
@@ -14,7 +16,7 @@ const typeDefs = mergeTypeDefs([
     client.typeDef, 
     terminal.typeDef, 
     user.typeDef,
-    gql`scalar Date`,    
+    dateTypeDef,
     ... directives.map((d) => d.typeDefs)
 ])
 

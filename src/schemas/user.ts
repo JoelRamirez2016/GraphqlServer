@@ -1,7 +1,6 @@
-import { gql } from "apollo-server";
 import { addUser, deleteUser, getUser, getUsers, login, updateUser } from "../services/user.service";
 
-export const typeDef = gql`
+export const typeDef = `#graphql
     type User {
         id: String!
         name: String!

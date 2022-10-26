@@ -1,14 +1,13 @@
 import { getDirective, MapperKind, mapSchema } from '@graphql-tools/utils';
-import { gql } from 'apollo-server';
-import { defaultFieldResolver, DocumentNode, GraphQLError, GraphQLSchema } from 'graphql';
+import { defaultFieldResolver, GraphQLError, GraphQLSchema } from 'graphql';
 
 interface Directive {
-    typeDefs: DocumentNode
+    typeDefs: string
     transformer: Function
 }
 export const isLoggedInDirective = (directiveName: string) : Directive => {
     return {
-        typeDefs: gql`directive @${directiveName} on FIELD_DEFINITION`,
+        typeDefs: `directive @${directiveName} on FIELD_DEFINITION`,
         transformer: (schema: GraphQLSchema) => mapSchema(schema, {
             [MapperKind.OBJECT_FIELD]: (fieldConfig) => {
                 const directive = getDirective(schema, fieldConfig, directiveName);
@@ -31,7 +30,7 @@ export const isLoggedInDirective = (directiveName: string) : Directive => {
 
 export const CanDirective = (directiveName: string) : Directive => {
     return {
-        typeDefs: gql`directive @${directiveName} on FIELD_DEFINITION`,
+        typeDefs: `directive @${directiveName} on FIELD_DEFINITION`,
         transformer: (schema: GraphQLSchema) => mapSchema(schema, {
             [MapperKind.OBJECT_FIELD]: (fieldConfig) => {
                 const directive = getDirective(schema, fieldConfig, directiveName);

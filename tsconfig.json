@@ -12,5 +12,8 @@
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "exclude": [
+    "src/**/*.spec.ts"
+  ]
 }
