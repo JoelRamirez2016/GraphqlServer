@@ -3,9 +3,14 @@ import * as dotenv from 'dotenv'
 
 dotenv.config({ path: path.resolve(__dirname, "../config/.env") })
 
+enum ENV {
+    PRODUCTION="PRODUCTION",
+    DEMO="DEMO"    
+}
 interface Config {
     JWT_SECRET: string;
     PORT: number;
+    ENV: ENV;
 }
 
 const getConfig = () => {

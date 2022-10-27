@@ -16,7 +16,7 @@ import config from '../config/config';
   const httpServer = http.createServer(app);
   const wsServer = new WebSocketServer({
     server: httpServer,
-    path: '/graphql',
+    path: '/',
   });
   const serverCleanup = useServer({ schema }, wsServer);
   const server = new ApolloServer({  

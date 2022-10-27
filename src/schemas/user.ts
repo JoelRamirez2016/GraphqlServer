@@ -1,5 +1,8 @@
-import { PubSub } from '@apollo/server'
 import { addUser, deleteUser, getUser, getUsers, login, updateUser } from "../services/user.service";
+import { RedisPubSub } from 'graphql-redis-subscriptions';
+
+const pubsub = new RedisPubSub();
+const USER_CONSULTED = "userConsulted";
 
 export const typeDef = `#graphql
     type User {
@@ -45,12 +48,22 @@ export const typeDef = `#graphql
             password: String!
         ): Token
     }
+
+    type Subscription {
+        userConsulted: User!
+    }
 `;
 
 export const resolvers = {
     Query: {
         users: () => getUsers(),
-        user: (_:any, args:any) => getUser(args.id),  
+        user: (_:any, args:any) => getUser(args.id)
+            .then((u) => {
+                if (u) {
+                    pubsub.publish(USER_CONSULTED, { userConsulted: u });
+                }
+                return u;
+            }),
         userCount: () => getUsers().then((users) => users.length),
         me: (_:any, _args:any, {currentUser}:any) => currentUser
     },
@@ -62,7 +75,7 @@ export const resolvers = {
     },    
     Subscription:{
         userConsulted:{
-            subscribe: () => pubSub.asyncIterator
+            subscribe: () => pubsub.asyncIterator(USER_CONSULTED),
         }
     },  
 };

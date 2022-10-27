@@ -5,8 +5,8 @@ import {
     getTerminales,
     getTerminalesByClient, 
     updateTerminal 
-} from "./terminales.service";
-import { addClient } from "./client.service";
+} from "../terminales.service";
+import { addClient } from "../client.service";
 
 describe("Test Terminales Service", () => {    
 

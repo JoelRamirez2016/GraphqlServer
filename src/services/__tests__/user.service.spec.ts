@@ -1,4 +1,4 @@
-import { addUser, deleteUser, getUser, getUsers, login, updateUser } from "./user.service";
+import { addUser, deleteUser, getUser, getUsers, login, updateUser } from "../user.service";
 
 describe("Test User Service", () => {     
     const userCreateParams = {

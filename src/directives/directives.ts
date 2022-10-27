@@ -28,26 +28,26 @@ export const isLoggedInDirective = (directiveName: string) : Directive => {
     }
 }
 
-export const CanDirective = (directiveName: string) : Directive => {
-    return {
-        typeDefs: `directive @${directiveName} on FIELD_DEFINITION`,
-        transformer: (schema: GraphQLSchema) => mapSchema(schema, {
-            [MapperKind.OBJECT_FIELD]: (fieldConfig) => {
-                const directive = getDirective(schema, fieldConfig, directiveName);
-                const permission = null
-                console.log(directive);
-                if (directive) {
-                    const { resolve = defaultFieldResolver } = fieldConfig;
+// export const CanDirective = (directiveName: string) : Directive => {
+//     return {
+//         typeDefs: `directive @${directiveName} on FIELD_DEFINITION`,
+//         transformer: (schema: GraphQLSchema) => mapSchema(schema, {
+//             [MapperKind.OBJECT_FIELD]: (fieldConfig) => {
+//                 const directive = getDirective(schema, fieldConfig, directiveName);
+//                 const permission = null
+//                 console.log(directive);
+//                 if (directive) {
+//                     const { resolve = defaultFieldResolver } = fieldConfig;
                     
-                    fieldConfig.resolve = (_: any, args: any, context: any, info: any ) => {                        
-                        if (!context.currentUser.hasPermission(permission)) { 
-                            throw new GraphQLError("Unauthorized");                    
-                        }
-                        return resolve(_, args, context, info);
-                    }
-                }
-                return fieldConfig;
-            }
-        })
-    }
-}
+//                     fieldConfig.resolve = (_: any, args: any, context: any, info: any ) => {                        
+//                         if (!context.currentUser.hasPermission(permission)) { 
+//                             throw new GraphQLError("Unauthorized");                    
+//                         }
+//                         return resolve(_, args, context, info);
+//                     }
+//                 }
+//                 return fieldConfig;
+//             }
+//         })
+//     }
+// }
