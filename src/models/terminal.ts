@@ -8,4 +8,4 @@ export interface Terminal {
 }
 
 export type TerminalCreateParams = Pick<Terminal, "name" |  "client">
-export type TerminalUpdateParams = Pick<Terminal, "id" | "name" |  "client">
+export type TerminalUpdateParams = Pick<Terminal, "id" | "name" >

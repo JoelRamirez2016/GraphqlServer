@@ -1,67 +1,19 @@
+import { delay, lastValueFrom, of } from "rxjs";
 import { v4 } from "uuid";
-import { Status, Transaction, TransactionCreateParams } from "../models/transaction"
+import { Transaction, TransactionCreateParams } from "../models/transaction"
 
-const data: Transaction[] = [
-    {
-        id:"2",
-        status: Status.OK,
-        value: 200,
-        terminal: {
-            client:{
-                id:"2",
-                name: "2",
-                createAt: new Date()
-            },
-            id: "2",
-            name: "2",
-            createAt: new Date()
-        },
-        createAt: new Date()
-    },
-    {
-        id:"2",
-        status: Status.OK,
-        value: 200,
-        terminal: {
-            client:{
-                id:"2",
-                name: "2",
-                createAt: new Date()
-            },
-            id: "2",
-            name: "2",
-            createAt: new Date()
-        },
-        createAt: new Date()
-    },
-    {
-        id:"2",
-        status: Status.OK,
-        value: 200,
-        terminal: {
-            client:{
-                id:"2",
-                name: "2",
-                createAt: new Date()
-            },
-            id: "2",
-            name: "2",
-            createAt: new Date()
-        },
-        createAt: new Date()
-    },
-]
+const data: Transaction[] = [];
 
 export const getTransactions = () => {
-    return data;
+    return lastValueFrom(of(data).pipe(delay(3000)));
 }
 export const getTransaction = (id: string) => {
-    return data.find((t) => t.id === id)
+    return lastValueFrom(of(data.find((t) => t.id === id)).pipe(delay(3000)));
 }
 export const addTransaction = (tParams: TransactionCreateParams) => {
     const t = {... tParams, id: v4(), createAt: new Date()};
     
     data.push(t);
 
-    return t;
+    return lastValueFrom(of( t ).pipe(delay(3000)));
 }

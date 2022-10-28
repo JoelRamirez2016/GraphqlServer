@@ -9,22 +9,22 @@ export const typeDef = `#graphql
     type Transaction {
         id: String!
         terminal: Terminal!
-        value: number!
+        value: Int!
         status: Status!
         createAt: Date!
     }
 
     type Query {
-        Transactions: [Transaction]!
-        Transaction(
+        transactions: [Transaction]!
+        transaction(
             id: String!
         ): Transaction        
     }
 
     type Mutation {
         addTransaction(
-            terminal: Terminal!
-            value: number!
+            terminalId: String!
+            value: Int!
             status: Status!
         ): Transaction!        
     }
@@ -32,13 +32,15 @@ export const typeDef = `#graphql
 
 export const resolvers = {
     Query: {
-        terminales: () => getTransactions(),
-        terminal: (_:any, args:any) => getTransaction(args.id),
+        transactions: () => getTransactions(),
+        transaction: (_:any, args:any) => getTransaction(args.id)            
     },    
     Mutation: {
-        addTransactions: (_:any, args:any) => addTransaction(args),
+        addTransaction: (_:any, { terminalId, value, status }:any) => 
+            getTerminal(terminalId).then(terminal => 
+                terminal ? addTransaction({ value, status, terminal }) : null),
     },
-    Transactions: {
+    Transaction: {
         terminal: (_: any) => getTerminal(_.id)
     }
 }

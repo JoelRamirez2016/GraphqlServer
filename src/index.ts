@@ -3,7 +3,7 @@ import { expressMiddleware } from '@apollo/server/express4';
 import { WebSocketServer } from 'ws';
 import { useServer } from 'graphql-ws/lib/use/ws';
 import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHttpServer';
-import { context } from './app';
+import { context } from './context';
 import { json } from 'body-parser';
 import cors from 'cors';
 import express from 'express';
@@ -21,6 +21,9 @@ import config from '../config/config';
   const serverCleanup = useServer({ schema }, wsServer);
   const server = new ApolloServer({  
     schema,
+    formatError: ({message, locations, path}) => {
+      return { message, locations, path }      
+    },
     plugins: [
       ApolloServerPluginDrainHttpServer({ httpServer }),
       {

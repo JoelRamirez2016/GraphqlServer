@@ -1,10 +1,9 @@
 import config from '../config/config';
 import jwt from 'jsonwebtoken';
 import { getUser } from './services/user.service';
-import { User } from './models/user';
 
 interface Context {
-    currentUser?: Promise<User | undefined> | User 
+    currentUser?: string
 }
 
 export const context = async ({ req }: any) => {
@@ -13,8 +12,7 @@ export const context = async ({ req }: any) => {
     try {
         if (auth && auth.toLocaleLowerCase().startsWith("bearer ")) {    
             const decodeToken = jwt.verify(auth.substring(7), config.JWT_SECRET);
-            const currentUser = getUser((<jwt.JwtPayload> decodeToken).id);
-            
+            const currentUser = getUser((<jwt.JwtPayload> decodeToken).id)                            
             return { currentUser };    
         }
     } catch (error) {        

@@ -1,6 +1,6 @@
 import { Terminal } from "./terminal"
 
-enum Status {
+export enum Status {
     OK = 1,
     REFUSED = 0
 }

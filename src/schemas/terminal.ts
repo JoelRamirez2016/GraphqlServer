@@ -35,10 +35,16 @@ export const resolvers = {
     Query: {
         terminales: () => getTerminales(),
         terminal: (_:any, args:any) => getTerminal(args.id),
-        terminalCount: () => getTerminales().then((terminales) => terminales.length) 
+        terminalCount: () => getTerminales().then((ts) => ts.length) 
     },    
     Mutation: {
-        addTerminal: (_:any, args:any) => addTerminal(args),
+        addTerminal: (_:any, { clientId, name }:any) => getClient(clientId)
+            .then(client => {
+                if (!client) {
+                    throw new Error("CLIENT NOT FOUND");                    
+                }
+                return addTerminal({name, client});
+            }),
         updateTerminal: (_: any, args: any) => updateTerminal(args),
         deleteTerminal: (_: any, args: any) => deleteTerminal(args.id)
     },

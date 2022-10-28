@@ -1,5 +1,6 @@
 import { getDirective, MapperKind, mapSchema } from '@graphql-tools/utils';
 import { defaultFieldResolver, GraphQLError, GraphQLSchema } from 'graphql';
+import ConstraintDirective  from 'graphql-constraint-directive'
 
 interface Directive {
     typeDefs: string
@@ -15,10 +16,13 @@ export const isLoggedInDirective = (directiveName: string) : Directive => {
                 if (directive) {
                     const { resolve = defaultFieldResolver } = fieldConfig;
                     
-                    fieldConfig.resolve = (_: any, args: any, context: any, info: any ) => {                        
-                        if (!context.currentUser) { 
-                            throw new GraphQLError("Unauthenticated");                    
+                    fieldConfig.resolve = async (_: any, args: any, context: any, info: any ) => {                        
+                        const u = await context.currentUser;
+
+                        if (!u) { 
+                            throw new GraphQLError("USER NOT FOUND");                    
                         }
+                        
                         return resolve(_, args, context, info);
                     }
                 }
@@ -28,6 +32,12 @@ export const isLoggedInDirective = (directiveName: string) : Directive => {
     }
 }
 
+export const constraintDirective = () : Directive => {
+    return {
+        typeDefs: ConstraintDirective.constraintDirectiveTypeDefs,
+        transformer: ConstraintDirective.constraintDirective()
+    }
+}
 // export const CanDirective = (directiveName: string) : Directive => {
 //     return {
 //         typeDefs: `directive @${directiveName} on FIELD_DEFINITION`,

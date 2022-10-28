@@ -4,7 +4,16 @@ import { User, UserCreateParams, UserUpdateParams, UserLoginParams } from '../mo
 import jwt from 'jsonwebtoken';
 import config from '../../config/config';
 
-const users: User[] = [];
+const users: User[] = [
+    {   
+        id:"ADMIN",
+        name: "ADMIN",
+        email: "ADMIN@g.com",  
+        username: "ADMIN",
+        password: "ADMIN",
+        createAt: new Date()
+    }
+];
 
 export const getUsers = () : Promise<User[]> =>  
     lastValueFrom(of( users ).pipe(delay(3000)))

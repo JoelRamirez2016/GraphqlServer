@@ -8,16 +8,21 @@ export const typeDef = `#graphql
     type User {
         id: String!
         name: String!
-        email: String!
+        email: String! 
         username: String!
         password: String!
         createAt: Date!
     }
-
+    input UserInput {
+        id: String @constraint(minLength: 5)
+        name: String! @constraint(pattern: "^[0-9a-zA-Z]*$", maxLength: 150)
+        email: String! @constraint(format: "email", maxLength: 100)
+        username: String! @constraint(pattern: "^[0-9a-zA-Z]*$", maxLength: 100)
+        password: String! @constraint(pattern: "^[0-9a-zA-Z]*$", maxLength: 100)      
+    }
     type Token {
         value: String!
     }
-
     type Query {
         users: [User]! @isLoggedIn
         user(
@@ -28,11 +33,8 @@ export const typeDef = `#graphql
     }
     type Mutation {
         addUser(
-            name: String!
-            email: String!
-            username: String!
-            password: String!
-        ): User!
+            input: UserInput!
+        ): User! @isLoggedIn
         updateUser(
             id: String!
             name: String!
@@ -42,13 +44,12 @@ export const typeDef = `#graphql
         ): User!
         deleteUser(
             id: String!
-        ): User! #@auth(role: "ADMIN")
+        ): User! 
         login(
             username: String!
             password: String!
         ): Token
     }
-
     type Subscription {
         userConsulted: User!
     }
@@ -68,7 +69,7 @@ export const resolvers = {
         me: (_:any, _args:any, {currentUser}:any) => currentUser
     },
     Mutation: {
-        addUser: (_:any, args:any) => addUser(args),
+        addUser: (_:any, {input}:any) => addUser(input),
         updateUser: (_:any, args:any) => updateUser(args),
         deleteUser: (_:any, args:any) => deleteUser(args.id),
         login: (_:any, args:any) => login(args)
