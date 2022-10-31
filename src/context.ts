@@ -2,10 +2,6 @@ import config from '../config/config';
 import jwt from 'jsonwebtoken';
 import { getUser } from './services/user.service';
 
-interface Context {
-    currentUser?: string
-}
-
 export const context = async ({ req }: any) => {
     const auth = req ? req.headers.authorization : null;
 
@@ -16,7 +12,7 @@ export const context = async ({ req }: any) => {
             return { currentUser };    
         }
     } catch (error) {        
-        return {} as Context;
+        return {};
     }
-    return {} as Context;
+    return {};
 }

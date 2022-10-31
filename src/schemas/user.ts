@@ -1,8 +1,5 @@
 import { addUser, deleteUser, getUser, getUsers, login, updateUser } from "../services/user.service";
-import { RedisPubSub } from 'graphql-redis-subscriptions';
-
-const pubsub = new RedisPubSub();
-const USER_CONSULTED = "userConsulted";
+import { pub, PUB_KEYS, register } from "./publisher";
 
 export const typeDef = `#graphql
     type User {
@@ -58,13 +55,7 @@ export const typeDef = `#graphql
 export const resolvers = {
     Query: {
         users: () => getUsers(),
-        user: (_:any, args:any) => getUser(args.id)
-            .then((u) => {
-                if (u) {
-                    pubsub.publish(USER_CONSULTED, { userConsulted: u });
-                }
-                return u;
-            }),
+        user: (_:any, args:any) => pub(PUB_KEYS.USER_CONSULTED, getUser(args.id)),
         userCount: () => getUsers().then((users) => users.length),
         me: (_:any, _args:any, {currentUser}:any) => currentUser
     },
@@ -76,7 +67,7 @@ export const resolvers = {
     },    
     Subscription:{
         userConsulted:{
-            subscribe: () => pubsub.asyncIterator(USER_CONSULTED),
+            subscribe: () => register(PUB_KEYS.USER_CONSULTED),
         }
     },  
 };
