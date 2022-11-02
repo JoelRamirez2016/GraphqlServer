@@ -1,12 +1,13 @@
 import { RedisPubSub } from 'graphql-redis-subscriptions';
 
 export const pubsub = new RedisPubSub();
+
 export const PUB_KEYS = {
     USER_CONSULTED: "userConsulted"
 };
 
-const validateKeys = (key:string): string => {
-    if (!(key in PUB_KEYS)) {
+const validateKeys = (key:string): string => {    
+    if (Object.values(PUB_KEYS).indexOf(key) === -1) {
         throw new Error("PUB_KEY NOT FOUND");
     }
     return key

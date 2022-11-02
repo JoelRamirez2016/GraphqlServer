@@ -41,6 +41,6 @@ export const resolvers = {
                 terminal ? addTransaction({ value, status, terminal }) : null),
     },
     Transaction: {
-        terminal: (_: any) => getTerminal(_.id)
+        terminal: (_: any) => getTerminal(_.terminal.id)
     }
 }
